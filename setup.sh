@@ -21,9 +21,9 @@ PACKAGES=(
 sudo apt install -y "${PACKAGES[@]}"
 
 # 2. Клонирование репозитория с конфигами
-DOTFILES_DIR="$HOME/dotfiles"
+DOTFILES_DIR="$HOME/DOTFILES"
 # ЗАМЕНИ НА СВОЙ URL:
-REPO_URL="https://github.com/ТВОЙ_GITHUB/dotfiles.git" 
+REPO_URL="https://github.com/FrameBard/DOTFILES.git"
 
 if [ -d "$DOTFILES_DIR" ]; then
     echo "📂 Обновляем dotfiles..."
@@ -49,8 +49,19 @@ echo "🔌 Устанавливаем плагины для Zsh..."
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions || true
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting || true
 
+# Установка темы Powerlevel10k
+P10K_DIR="$HOME/utils/powerlevel10k"
+if [ ! -d "$P10K_DIR" ]; then
+    echo "🌟 Устанавливаем тему Powerlevel10k..."
+    mkdir -p "$HOME/utils"
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_DIR"
+else
+    echo "✅ Powerlevel10k уже установлен."
+fi
+
 # 4. Создание симлинков (Делаем СТРОГО ПОСЛЕ установки Oh My Zsh)
 echo "🔗 Создаем символические ссылки..."
+
 
 create_symlink() {
     local source_file="$1"
@@ -67,7 +78,7 @@ create_symlink() {
 
 # Линкуем наш .zshrc
 create_symlink "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
-
+create_symlink "$DOTFILES_DIR/.p10k.zsh" "$HOME/.p10k.zsh"
 # 5. Смена оболочки по умолчанию на Zsh
 # Проверяем, не является ли Zsh уже оболочкой по умолчанию
 if [ "$SHELL" != "$(which zsh)" ]; then
