@@ -12,7 +12,9 @@ sudo apt update && sudo apt upgrade -y
 # Обязательно добавляем zsh в список пакетов
 PACKAGES=(
     "curl"
-    "git"
+    "fastfetch"
+    "btop"
+    "ffmpeg"
     "zsh"
     "vim"
     "tmux"
@@ -22,6 +24,20 @@ sudo apt install -y "${PACKAGES[@]}"
 
 # 2. Клонирование репозитория с конфигами
 DOTFILES_DIR="$HOME/DOTFILES"
+LOCAL_BIN_DIR="$HOME/.local/bin"
+
+mkdir -p "$LOCAL_BIN_DIR"
+
+if [ ! -f "$LOCAL_BIN_DIR/yt-dlp" ]; then
+    echo "🎥 Скачиваем последнюю версию yt-dlp..."
+    curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o "$LOCAL_BIN_DIR/yt-dlp"
+    # Делаем файл исполняемым
+    chmod a+rx "$LOCAL_BIN_DIR/yt-dlp"
+    echo "✅ yt-dlp успешно установлен!"
+else
+    echo "✅ yt-dlp уже установлен. (Для обновления используйте 'yt-dlp -U')"
+fi
+
 # ЗАМЕНИ НА СВОЙ URL:
 REPO_URL="https://github.com/FrameBard/DOTFILES.git"
 

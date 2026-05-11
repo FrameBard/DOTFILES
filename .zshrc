@@ -126,3 +126,14 @@ export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export PATH="$PATH:$HOME/development/flutter/bin"
+
+export PATH="$HOME/.local/bin:$PATH"
+
+music() {
+	if [ -z "$1" ]; then
+		echo "ERROR: Enter video link."
+        	echo "Usage: music video link>"
+    	else
+        	yt-dlp --no-playlist -x --audio-format mp3 --audio-quality 0 -o "%(title)s.%(ext)s" "$1"
+    	fi
+}
