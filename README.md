@@ -1,4 +1,4 @@
-### `music` (YouTube to MP3)
+### `music`
 A shell function to quickly extract and download high-quality MP3 audio from YouTube videos.
 
 **Key Features:**
